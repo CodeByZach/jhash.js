@@ -15,7 +15,9 @@ Common Usage
 -------
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/codebyzach/hash.js@latest/hash.js" integrity="sha256-5zzKE7HAkojg9Z7dbb9UHB7QLuLsvOXoLc6K5mfMWr4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/codebyzach/hash.js@latest/hash.js"
+        integrity="sha256-5zzKE7HAkojg9Z7dbb9UHB7QLuLsvOXoLc6K5mfMWr4="
+        crossorigin="anonymous"></script>
 <script>
     var md5 = Hash.hex_md5("string");
     var md5_hmac = Hash.hex_hmac_md5("key", "data");
