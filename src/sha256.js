@@ -1,4 +1,4 @@
-/*
+/*!
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-256, as defined
  * in FIPS 180-2
  * Version 2.2 Copyright Angel Marin, Paul Johnston 2000 - 2009.
@@ -112,8 +112,7 @@ function rstr2b64(input)
 function rstr2any(input, encoding)
 {
   var divisor = encoding.length;
-  var remainders = Array();
-  var i, q, x, quotient;
+  var i, j, q, x, quotient;
 
   /* Convert to an array of 16-bit big-endian values, forming the dividend */
   var dividend = Array(Math.ceil(input.length / 2));
@@ -125,10 +124,13 @@ function rstr2any(input, encoding)
   /*
    * Repeatedly perform a long division. The binary array forms the dividend,
    * the length of the encoding is the divisor. Once computed, the quotient
-   * forms the dividend for the next step. We stop when the dividend is zero.
-   * All remainders are stored for later use.
+   * forms the dividend for the next step. All remainders are stored for later
+   * use.
    */
-  while(dividend.length > 0)
+  var full_length = Math.ceil(input.length * 8 /
+                                    (Math.log(encoding.length) / Math.log(2)));
+  var remainders = Array(full_length);
+  for(j = 0; j < full_length; j++)
   {
     quotient = Array();
     x = 0;
@@ -140,7 +142,7 @@ function rstr2any(input, encoding)
       if(quotient.length > 0 || q > 0)
         quotient[quotient.length] = q;
     }
-    remainders[remainders.length] = x;
+    remainders[j] = x;
     dividend = quotient;
   }
 
@@ -148,12 +150,6 @@ function rstr2any(input, encoding)
   var output = "";
   for(i = remainders.length - 1; i >= 0; i--)
     output += encoding.charAt(remainders[i]);
-
-  /* Append leading zero equivalents */
-  var full_length = Math.ceil(input.length * 8 /
-                                    (Math.log(encoding.length) / Math.log(2)))
-  for(i = output.length; i < full_length; i++)
-    output = encoding[0] + output;
 
   return output;
 }
