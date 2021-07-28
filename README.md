@@ -3,99 +3,85 @@ jhash
 
 A JavaScript hash generator.
 
-* MD4
 * MD5
 * SHA-1
+* SHA-256
+* SHA-512
+* RIPEMD-160
 
 
-Loading the libraries
+Common Usage
 -------
 
-First [download the bundle](https://github.com/CodeByZach/hash.js/releases/tag/2.1.0). Copy the .js file into the same directory as your html file, and insert a tag like:
+First [download the bundle](https://github.com/CodeByZach/hash.js/releases/tag/2.2.0). For common use, I recommend using the minified scripts, which have been processed by the YUI Compressor. Note that these only support utf-8 input and hex output. Use it like this:
 
 ```html
-<script type="text/javascript" src="md5.js"></script>
-```
-
-The scripts don't interfere with each other - you can use them all in the same document.
-
-Alternatively, you can copy the code and paste it straight into your html file, inside a script tag. I tend to keep the code separate, but including it will load faster.
-
-
-Calculating a hash
--------
-
-Usually you'll want to get the result in hexadecimal, so it can be submitted as part of a form without worrying about URL encoding.
-
-```html
+<script type="text/javascript" src="md5-min.js"></script>
 <script type="text/javascript">
-    var hash = hex_md5("input string");
+    var hash = hex_md5("string");
+    var hmac = hex_hmac_md5("key", "data");
 </script>
 ```
 
-Note that the input must be a string - `hex_md5(Math.random())` will not function correctly; you must do `hex_md5(Math.random().toString())`.
-
-You can also get the result in base-64 encoding:
-
-```html
-<script type="text/javascript">
-    var hash = b64_md5("input string");
-</script>
-```
-
-You can also get the result as a binary string; this is discussed below.
+The usage for other hashes is essentially the same - `sha1`, `sha256`, `sha512` or `rmd160`.
 
 
-HMAC - keyed hashes
+Other Output Encodings
 -------
 
-In many uses of hashes you end up wanting to combine a key with some data. It isn't so bad to do this by simple concatenation, but HMAC is specifically designed for this use. The usage is:
-
-```html
-<script type="text/javascript">
-    var hash = hex_hmac_md5("key", "data");
-</script>
-```
-
-The HMAC result is also available base-64 encoded or as a binary string, using `b64_hmac_*` or `str_hmac_*`.
-
-Some other hash libraries have the arguments the other way round. If the JavaScript HMAC doesn't match the value your server library generates, try swapping the order.
-
-
-Configurable options
--------
-
-There are a few configurable variables; you may have to tweak these to be compatible with the hash function on the server.
-
-| Variable    | Description                                                       | Options                                                       |
-| ----------- | ----------------------------------------------------------------- | ------------------------------------------------------------- |
-| **hexcase** | The case of the letters A-F in hexadecimal output                 | 0 - lower case (default)<br/>1 - upper case                   |
-| **b64pad**  | The character used to pad base-64 output to a multiple of 3 bytes | "" - no padding (default)<br/>"=" - for strict RFC compliance |
-| **chrsz**   | Whether string input should be treated as ASCII or Unicode.       | 8 - ASCII (default)<br/>16 - Unicode                          |
-
-The Unicode support uses utf-16 encoding, which is rarely what people want. Version 2.2 has better Unicode support, with utf-8 encoding.
-
-To set a variable, use a syntax like this:
+The scripts support base64 encoding, although you must use the full script, not the minified version. If necessary, you can create you own minified script, with the functionality you need. Use it like this:
 
 ```html
 <script type="text/javascript" src="md5.js"></script>
 <script type="text/javascript">
-    var chrsz = 16;
+    var hash = b64_md5("string");
+    var hmac = b64_hmac_md5("key", "data");
 </script>
 ```
 
-In general, it's ok to change the values of these variables between calls to the library; for example you can do ASCII and Unicode hashes on the same page. However, you can't change `chrsz` and then re-use data returned by a `str_*` function.
+There is also a mode called "any output encoding". This lets you specify a string of characters, and all those characters will be used to encode the password. The string can be any length - it does not need to be a power of 2. This is useful for applications like password generation, when you want to get as much unpredictability as possible into a short password. Use it like this:
 
-
-Binary string output
--------
-
-This representation is useful when you want to feed the result of a hash operation back into another operation. The ability to do this lets you create a variety of cryptographic protocols.
-
-For example, to do a double hash:
-
-```javascript
-var double_hash = hex_md5(str_md5(data));
+```html
+<script type="text/javascript" src="md5.js"></script>
+<script type="text/javascript">
+    var hash = any_md5("string", "encoding");
+</script>
 ```
 
-The string is encoded so each character of a string represents either one or two bytes, in ASCII and Unicode respectively. This would be troublesome to send over HTTP as form data, but JavaScript strings are completely binary safe.
+If the encoding is `0123456789ABCDEF` the output will be identical to `hex_md5`. It isn't possible to create output that's identical to base64 encoding.
+
+
+Advanced Usage
+-------
+
+If you want to use more advanced features, such as multiple repetitions of a hash, or utf-16 encoding, you need to use a slightly lower-level interface to the scripts. These have the concept of a "raw string"; this is a JavaScript string, but all the characters are between 0 and 255 - essentially a binary array. To get a hex hash, using utf-16 encoding:
+
+```html
+<script type="text/javascript" src="md5.js"></script>
+<script type="text/javascript">
+    var hash = rstr2hex(rstr_md5(str2rstr_utf16le("string")));
+</script>
+```
+
+You can also use `str2rstr_utf16be`. To perform a double hash:
+
+```html
+<script type="text/javascript" src="md5.js"></script>
+<script type="text/javascript">
+    var hash = rstr2hex(rstr_md5(rstr_md5(str2rstr_utf8("string"))));
+</script>
+```
+
+You can use variants of this to produce just about any hash you may need.
+
+
+Unit Tests
+-------
+
+To run the unit tests, you will need Python 2.5 or newer. The script `test.py` generates an HTML file that runs the tests:
+
+```bash
+python test.py > test.html
+```
+
+Next, open `test.html` in a browser to run the tests, and see the results. If you want to test the minified versions of the scripts, use `test-min.py`.
