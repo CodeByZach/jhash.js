@@ -8,7 +8,7 @@ all_algs = ['md5', 'sha1', 'ripemd160', 'sha256', 'sha512']
 short = {'ripemd160': 'rmd160'}
 test_strings = ['hello', 'world', u'fred\u1234'.encode('utf-8'), 'this is a longer test message to confirm that multiple blocks are handled correctly by the hashing algorithm']
 
-print ("""<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/></head><body><script src="https://cdn.jsdelivr.net/npm/jhash.js@latest/jhash.min.js"></script>""")
+print ("""<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/></head><body><script src="../jhash.js"></script>""")
 
 for alg in all_algs:
     algs = short.get(alg, alg)
