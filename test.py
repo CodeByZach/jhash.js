@@ -13,7 +13,7 @@ print """<html><head><meta http-equiv="content-type" content="text/html; charset
 for alg in all_algs:
     algs = short.get(alg, alg)
 
-    print """<script src="%s.js"></script>
+    print """<script src="src/%s.js"></script>
 <script>
 var pass = 0; fail = 0;
 function check(a, b)
