@@ -1,10 +1,10 @@
 /*!
- * hash.js v3.0.0
+ * jhash.js v3.1.0
  * https://github.com/CodeByZach/hash.js/
  * Licensed BSD 2-Clause (c) Paul Johnston & Contributors
  */
 
-class Hash {
+class JHash {
 	'use strict';
 
 	/*
