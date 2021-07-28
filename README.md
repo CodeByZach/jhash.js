@@ -15,7 +15,7 @@ Common Usage
 -------
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/codebyzach/jhash.js@latest/jhash.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jhash.js@latest/jhash.min.js"></script>
 <script>
     var md5 = JHash.hex_md5("string");
     var md5_hmac = JHash.hex_hmac_md5("key", "data");
@@ -33,6 +33,7 @@ Common Usage
     var rmd160_hmac = JHash.hex_hmac_rmd160("key", "data");
 </script>
 ```
+
 
 Other Output Encodings
 -------

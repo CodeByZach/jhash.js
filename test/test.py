@@ -8,7 +8,7 @@ all_algs = ['md5', 'sha1', 'ripemd160', 'sha256', 'sha512']
 short = {'ripemd160': 'rmd160'}
 test_strings = ['hello', 'world', u'fred\u1234'.encode('utf-8'), 'this is a longer test message to confirm that multiple blocks are handled correctly by the hashing algorithm']
 
-print ("""<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/></head><body><script src="jhash.js"></script>""")
+print ("""<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/></head><body><script src="https://cdn.jsdelivr.net/npm/jhash.js@latest/jhash.min.js"></script>""")
 
 for alg in all_algs:
     algs = short.get(alg, alg)
@@ -31,11 +31,11 @@ document.write("Testing %s...<br/>");
     for t in test_strings:
         h = hashlib.new(alg)
         h.update(t)
-        print ("check(Hash.hex_%s('%s'), '%s');" % (algs, t, h.hexdigest()))
-        print ("check(Hash.b64_%s('%s'), '%s');" % (algs, t, base64.b64encode(h.digest()).rstrip('=')))
+        print ("check(JHash.hex_%s('%s'), '%s');" % (algs, t, h.hexdigest()))
+        print ("check(JHash.b64_%s('%s'), '%s');" % (algs, t, base64.b64encode(h.digest()).rstrip('=')))
         h = hmac.new('key', t, lambda: hashlib.new(alg))
-        print ("check(Hash.hex_hmac_%s('key', '%s'), '%s');" % (algs, t, h.hexdigest()))
-        print ("check(Hash.b64_hmac_%s('key', '%s'), '%s');" % (algs, t, base64.b64encode(h.digest()).rstrip('=')))
+        print ("check(JHash.hex_hmac_%s('key', '%s'), '%s');" % (algs, t, h.hexdigest()))
+        print ("check(JHash.b64_hmac_%s('key', '%s'), '%s');" % (algs, t, base64.b64encode(h.digest()).rstrip('=')))
 
     print ("""
 document.write('Tests competed - ' + pass + ' passed; ' + fail + ' failed.<br/><br/>');
