@@ -1,0 +1,32 @@
+{
+  "name": "hash-js",
+  "version": "3.0.0",
+  "description": "A JavaScript hash generator.",
+  "main": "hash.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeByZach/hash.js.git"
+  },
+  "keywords": [
+    "hash",
+    "md5",
+    "sha1",
+    "sha256",
+    "sha512",
+    "ripemd160",
+    "hmac",
+    "hmac-md5",
+    "hmac-sha1",
+    "hmac-sha512",
+    "hmac-sha256"
+  ],
+  "author": "CodeByZach <codebyzach@gmail.com>",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/CodeByZach/hash.js/issues"
+  },
+  "homepage": "https://github.com/CodeByZach/hash.js#readme"
+}
