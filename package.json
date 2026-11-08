@@ -1,6 +1,6 @@
 {
   "name": "jhash.js",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "A JavaScript hash generator.",
   "main": "jhash.js",
   "files": [

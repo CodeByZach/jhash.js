@@ -1,5 +1,5 @@
 /*!
- * jhash.js v3.1.0
+ * jhash.js v3.2.0
  * https://github.com/CodeByZach/jhash.js/
  * Licensed BSD 2-Clause (c) Paul Johnston & Contributors and Zachary Miller
  */
