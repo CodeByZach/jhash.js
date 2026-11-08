@@ -1,10 +1,15 @@
 {
   "name": "jhash.js",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "A JavaScript hash generator.",
-  "main": "hash.js",
+  "main": "jhash.js",
+  "files": [
+    "jhash.js",
+    "jhash.min.js"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node scripts/build.mjs",
+    "test": "acorn --ecma2022 --silent jhash.js jhash.min.js && node --test"
   },
   "repository": {
     "type": "git",
@@ -23,10 +28,21 @@
     "hmac-sha512",
     "hmac-sha256"
   ],
-  "author": "CodeByZach <codebyzach@gmail.com>",
+  "author": "Zachary Miller <codebyzach@gmail.com> (https://github.com/CodeByZach)",
   "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/CodeByZach/jhash.js/issues"
   },
-  "homepage": "https://github.com/CodeByZach/jhash.js#readme"
+  "homepage": "https://github.com/CodeByZach/jhash.js#readme",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^26.0.0",
+      "onFail": "error"
+    }
+  },
+  "devDependencies": {
+    "acorn": "8.19.0",
+    "esbuild": "0.28.2"
+  }
 }
