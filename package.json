@@ -28,7 +28,7 @@
     "hmac-sha512",
     "hmac-sha256"
   ],
-  "author": "CodeByZach <codebyzach@gmail.com>",
+  "author": "Zachary Miller <codebyzach@gmail.com> (https://github.com/CodeByZach)",
   "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/CodeByZach/jhash.js/issues"

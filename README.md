@@ -131,4 +131,4 @@ Credits
 -------
 
 The hash functions are by [Paul Johnston](https://pajhome.org.uk/crypt/md5/) and contributors, combined into
-JHash by [CodeByZach](https://github.com/CodeByZach).
+JHash by [Zachary Miller](https://github.com/CodeByZach).
