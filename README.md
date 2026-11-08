@@ -1,6 +1,6 @@
 JHash.js
 ====
-[![Latest Release](https://img.shields.io/github/tag/CodeByZach/jhash.js.svg?label=release)](https://github.com/CodeByZach/jhash.js/releases/latest) [![Stars](https://img.shields.io/github/stars/CodeByZach/jhash.js.svg)](https://github.com/CodeByZach/jhash.js/stargazers) [![Forks](https://img.shields.io/github/forks/CodeByZach/jhash.js.svg)](https://github.com/CodeByZach/jhash.js/network/members) [![License](https://img.shields.io/github/license/CodeByZach/jhash.js.svg)](LICENSE)
+[![Latest Release](https://img.shields.io/github/v/tag/CodeByZach/jhash.js?label=release&sort=semver)](https://github.com/CodeByZach/jhash.js/releases/latest) [![Stars](https://img.shields.io/github/stars/CodeByZach/jhash.js.svg)](https://github.com/CodeByZach/jhash.js/stargazers) [![Forks](https://img.shields.io/github/forks/CodeByZach/jhash.js.svg)](https://github.com/CodeByZach/jhash.js/network/members) [![License](https://img.shields.io/github/license/CodeByZach/jhash.js.svg)](LICENSE)
 
 A JavaScript hash generator.
 
@@ -10,12 +10,19 @@ A JavaScript hash generator.
 * SHA-512
 * RIPEMD-160
 
+Each one also has an HMAC version.
+
+> **Security note:** MD5 and SHA-1 are broken for security purposes: don't use them for passwords, signatures or anything an
+> attacker could exploit. For passwords, use a password-hashing function such as Argon2 or bcrypt on the
+> server. In browsers, the built-in [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest)
+> also computes SHA-1, SHA-256 and SHA-512, asynchronously.
+
 
 Common Usage
 -------
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/jhash.js@latest/jhash.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jhash.js@3/jhash.min.js"></script>
 <script>
     var md5 = JHash.hex_md5("string");
     var md5_hmac = JHash.hex_hmac_md5("key", "data");
@@ -32,6 +39,15 @@ Common Usage
     var rmd160_hash = JHash.hex_rmd160("string");
     var rmd160_hmac = JHash.hex_hmac_rmd160("key", "data");
 </script>
+```
+
+With npm (`npm install jhash.js`):
+
+```javascript
+const JHash = require('jhash.js');
+// or: import JHash from 'jhash.js';
+
+const md5 = JHash.hex_md5("string");
 ```
 
 
@@ -57,26 +73,28 @@ var rmd160_hash = JHash.b64_rmd160("string");
 var rmd160_hmac = JHash.b64_hmac_rmd160("key", "data");
 ```
 
-There is also a mode called "any output encoding". This lets you specify a string of characters, and all those characters will be used to encode the password. The string can be any length - it does not need to be a power of 2. This is useful for applications like password generation, when you want to get as much unpredictability as possible into a short password. Use it like this:
+There is also a mode called "any output encoding". This lets you specify a string of characters, and all those characters will be used to encode the hash. The string can be any length - it does not need to be a power of 2. Use it like this:
 
 ```javascript
-var md5 = JHash.any_md5("string");
-var md5_hmac = JHash.any_hmac_md5("key", "data");
+var encoding = "0123456789abcdefghijklmnopqrstuvwxyz";
 
-var sha1_hash = JHash.any_sha1("string");
-var sha1_hmac = JHash.any_hmac_sha1("key", "data");
+var md5 = JHash.any_md5("string", encoding);
+var md5_hmac = JHash.any_hmac_md5("key", "data", encoding);
 
-var sha256_hash = JHash.any_sha256("string");
-var sha256_hmac = JHash.any_hmac_sha256("key", "data");
+var sha1_hash = JHash.any_sha1("string", encoding);
+var sha1_hmac = JHash.any_hmac_sha1("key", "data", encoding);
 
-var sha512_hash = JHash.any_sha512("string");
-var sha512_hmac = JHash.any_hmac_sha512("key", "data");
+var sha256_hash = JHash.any_sha256("string", encoding);
+var sha256_hmac = JHash.any_hmac_sha256("key", "data", encoding);
 
-var rmd160_hash = JHash.any_rmd160("string");
-var rmd160_hmac = JHash.any_hmac_rmd160("key", "data");
+var sha512_hash = JHash.any_sha512("string", encoding);
+var sha512_hmac = JHash.any_hmac_sha512("key", "data", encoding);
+
+var rmd160_hash = JHash.any_rmd160("string", encoding);
+var rmd160_hmac = JHash.any_hmac_rmd160("key", "data", encoding);
 ```
 
-If the encoding is `0123456789ABCDEF` the output will be identical to `hex_md5`. It isn't possible to create output that's identical to `base64` encoding.
+If the encoding is `0123456789abcdef` the output will be identical to `hex_md5`. It isn't possible to create output that's identical to `base64` encoding.
 
 
 Advanced Usage
@@ -100,10 +118,17 @@ You can use variants of this to produce just about any hash you may need.
 Unit Tests
 -------
 
-To run the unit tests, you will need Python 2 or newer. The script `test.py` generates an HTML file that runs the tests:
+The tests compare every hash, in every output encoding and as an HMAC, with Node's built-in `crypto` module.
+With Node.js 26 installed:
 
 ```bash
-python test.py > test.html
+npm ci
+npm test
 ```
 
-Next, open `test.html` in a browser to run the tests, and see the results.
+
+Credits
+-------
+
+The hash functions are by [Paul Johnston](https://pajhome.org.uk/crypt/md5/) and contributors, combined into
+JHash by [CodeByZach](https://github.com/CodeByZach).
