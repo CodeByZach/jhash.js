@@ -1,6 +1,6 @@
 /*!
  * jhash.js v3.1.0
- * https://github.com/CodeByZach/hash.js/
+ * https://github.com/CodeByZach/jhash.js/
  * Licensed BSD 2-Clause (c) Paul Johnston & Contributors
  */
 
@@ -1148,6 +1148,9 @@ class JHash {
 		15,  5,  8, 11, 14, 14,  6, 14,  6,  9, 12,  9, 12,  5, 15,  8,
 		 8,  5, 12,  9, 12,  5, 14,  6,  8, 13,  6,  5, 15, 13, 11, 11
 	];
+}
 
-
+// For Node and bundlers (require or import). In a browser <script>, JHash is a global.
+if (typeof module === 'object' && module && typeof module.exports === 'object') {
+	module.exports = JHash;
 }
