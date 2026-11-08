@@ -12,10 +12,11 @@ A JavaScript hash generator.
 
 Each one also has an HMAC version.
 
-> **Security note:** MD5 and SHA-1 are broken for security purposes: don't use them for passwords, signatures or anything an
-> attacker could exploit. For passwords, use a password-hashing function such as Argon2 or bcrypt on the
-> server. In browsers, the built-in [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest)
-> also computes SHA-1, SHA-256 and SHA-512, asynchronously.
+> **Security note:** MD5 and SHA-1 are no longer secure: practical collision attacks exist. Don't use them for
+> passwords, signatures or anything an attacker could exploit. They're still fine for checksums and cache keys.
+> For passwords, use a password-hashing function such as Argon2 or bcrypt on the server. In browsers, the
+> built-in [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest) also
+> computes SHA-1, SHA-256 and SHA-512, asynchronously.
 
 
 Common Usage
